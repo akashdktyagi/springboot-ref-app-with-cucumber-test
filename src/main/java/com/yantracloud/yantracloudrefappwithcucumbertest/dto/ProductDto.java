@@ -1,14 +1,12 @@
 package com.yantracloud.yantracloudrefappwithcucumbertest.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @Builder(setterPrefix = "with")
 @ToString
+@Data
 public class ProductDto {
     String name;
     String description;

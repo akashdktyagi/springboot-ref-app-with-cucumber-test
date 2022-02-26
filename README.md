@@ -17,6 +17,14 @@ a class with annotation as ```@SpringBootTest``` or other TestSliced Annotation 
 * Add ```@AutoConfigureMockMvc``` in CucumberSpringConfiguration.class. We will use MockMvc to call endpoints. Other Libraries can also be used instead of MockMvc, for instance I could also use RestAssured as a java client. But MockMvc is recommended because it is near to Spring Eco system and developers in general are more comfortable with it.
 * Autowire MockMvc Instance in the Step Defs ```    @Autowired MockMvc mockMvc;```
 * Write Step defs
+* Write the Step Defs Impl using Mock MVC
+* Impl controller and add post mapping
+* Impl Model
+* Impl Service
+* Impl  DTO
+* Run curl cmd:
+  * ```curl --data '{"name":"a","description":"b","company":"c"}' -H 'Content-Type: application/json' --request POST 'http://localhost:9096/api/entity'```
+
 
 # References:
 https://www.baeldung.com/cucumber-spring-integration

@@ -33,7 +33,7 @@ public class StepDefs {
     @Autowired
     ObjectMapper objectMapper;
     String body;
-    private String server = "http://localhost:9096";
+    private String server = "http://localhost:9096/api";
     ResultActions resultActions;
 
     @Given("Client have new entity with details as below")
