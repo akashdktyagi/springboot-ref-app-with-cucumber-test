@@ -12,7 +12,6 @@ public class EntityServiceImpl implements IEntityService {
     public ProductDto createEntity(ProductDto productDto) {
         log.debug("Entity Object Received: " + productDto);
         return productDto;
-
     }
 
     @Override
