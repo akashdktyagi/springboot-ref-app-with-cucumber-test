@@ -6,7 +6,8 @@ import lombok.*;
 @Setter
 @Builder(setterPrefix = "with")
 @ToString
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductDto {
     String name;
     String description;

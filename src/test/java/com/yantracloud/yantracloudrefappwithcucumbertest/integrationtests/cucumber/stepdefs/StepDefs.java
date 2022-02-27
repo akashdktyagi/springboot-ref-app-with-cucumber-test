@@ -3,9 +3,11 @@ package com.yantracloud.yantracloudrefappwithcucumbertest.integrationtests.cucum
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yantracloud.yantracloudrefappwithcucumbertest.dto.ProductDto;
+import com.yantracloud.yantracloudrefappwithcucumbertest.repository.ProductRepository;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -28,14 +30,19 @@ public class StepDefs {
     MockMvc mockMvc;
 
     @Autowired
+    ProductRepository productRepository;
+
+    @Autowired
     ObjectMapper objectMapper;
     String body;
     private String server = "http://localhost:9096/api";
     ResultActions resultActions;
 
+    ProductDto productDto;
+
     @Given("Client have new entity with details as below")
     public void client_have_new_entity_with_details_as_below(Map<String,String> map) throws JsonProcessingException {
-        ProductDto productDto = ProductDto.builder()
+        productDto = ProductDto.builder()
                 .withName(map.get("name"))
                 .withCompany(map.get("company"))
                 .withDescription(map.get("description"))
@@ -58,6 +65,11 @@ public class StepDefs {
         resultActions.andExpect(status().is(int1));
     }
 
-//    a new product is created in the DB
+    @Then("a new product is created in the DB")
+    public void a_new_product_is_created_in_the_db() throws Exception {
+        String nameFromDB = productRepository.findByName(productDto.getName()).getName();
+        Assertions.assertThat(productDto.getName()).isEqualTo(nameFromDB);
+    }
+
 
 }

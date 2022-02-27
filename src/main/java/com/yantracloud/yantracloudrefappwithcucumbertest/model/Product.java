@@ -1,8 +1,6 @@
 package com.yantracloud.yantracloudrefappwithcucumbertest.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,10 +8,12 @@ import javax.persistence.*;
 @Builder(setterPrefix = "with")
 @ToString
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    Integer id;
 
     @Column(nullable = false)
     String name;
