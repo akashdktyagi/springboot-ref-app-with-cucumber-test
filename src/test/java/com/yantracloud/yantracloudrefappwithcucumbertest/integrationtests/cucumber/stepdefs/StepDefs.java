@@ -9,6 +9,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -20,11 +21,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class StepDefs {
-//    resultActions = mockMvc.perform(post(createEndPoint, 42L)
-//                .contentType("application/json")
-//                .header("Authorization","Bearer " +  token)
-//                .content(objectMapper.writeValueAsString(product)))
-//            .andExpect(status().is(200));
 
     @Autowired
     MockMvc mockMvc;
@@ -35,7 +31,10 @@ public class StepDefs {
     @Autowired
     ObjectMapper objectMapper;
     String body;
-    private String server = "http://localhost:9096/api";
+
+    @Value("${server.host}")
+    private String server;
+
     ResultActions resultActions;
 
     ProductDto productDto;

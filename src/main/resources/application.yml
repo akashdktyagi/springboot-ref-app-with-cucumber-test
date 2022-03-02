@@ -1,5 +1,6 @@
 server:
   port: '9096'
+  host: 'http://localhost:9096/api'
 spring:
   h2:
     console.enabled: true

@@ -5,10 +5,10 @@ import com.yantracloud.yantracloudrefappwithcucumbertest.model.Product;
 import com.yantracloud.yantracloudrefappwithcucumbertest.services.IProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -25,6 +25,15 @@ public class ProductRestController {
         Product product = modelMapper.map(productDto, Product.class);
         Product productReturned = entityService.createEntity(product);
         return modelMapper.map(productReturned, ProductDto.class);
+    }
+
+    @GetMapping("/entity")
+    public List<ProductDto> getEntity() {
+        List<Product> productReturned = entityService.getAllEntities();
+        return productReturned
+                .stream()
+                .map(product -> modelMapper.map(product,ProductDto.class))
+                .collect(Collectors.toList());
     }
 }
 // curl --data "name=a&description=b&company=c" --request POST 'http://localhost:9096/entity'
