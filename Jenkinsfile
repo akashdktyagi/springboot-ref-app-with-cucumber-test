@@ -4,7 +4,7 @@ pipeline {
         stage('Build Create and Push Image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'p', usernameVariable: 'u')]) {
-                   sh "mvn clean install -Djib.to.auth.username=$u -Djib.to.auth.password=$p"
+                   sh "mvn -B clean install -Djib.to.auth.username=$u -Djib.to.auth.password=$p"
                 }
 
             }
