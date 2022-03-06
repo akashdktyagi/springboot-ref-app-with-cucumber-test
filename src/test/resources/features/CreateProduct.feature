@@ -2,7 +2,6 @@ Feature: As a client
   I want to create a new Entity
   So that every time a new user is created
 
-  @t
   Scenario: Client want to create a new Entity
     Given Client have new entity with details as below
       | name        | laptop          |

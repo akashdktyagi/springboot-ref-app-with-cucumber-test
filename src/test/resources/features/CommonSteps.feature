@@ -1,6 +1,6 @@
 Feature: Common Steps
 
-  @t
+  @manual
   # Below is the List of Reusable Steps which can directly be used to write Integration tests
   Scenario: validate post
     Given with end point url as ""

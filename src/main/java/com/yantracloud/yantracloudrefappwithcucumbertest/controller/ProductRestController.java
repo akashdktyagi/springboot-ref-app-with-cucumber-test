@@ -39,3 +39,5 @@ public class ProductRestController {
 // curl --data "name=a&description=b&company=c" --request POST 'http://localhost:9096/entity'
 
 //curl --data '{"name":"a","description":"b","company":"c"}' -H 'Content-Type: application/json' --request POST 'http://localhost:9096/api/entity'
+
+//curl --data '{"name":"a","description":"b","company":"c"}' -H 'Content-Type: application/json' --request POST 'http://localhost:9097/api/entity'
