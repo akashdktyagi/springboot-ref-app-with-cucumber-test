@@ -4,6 +4,8 @@
   * https://github.com/mermaid-js/mermaid/blob/develop/docs/README.md
 
 ### CI Flow:
+```mermaid
+
 graph TD
     A[Source Code] -->|Build Trigger| B(Unit Test Execution)
     B --> C(Integration Test Execution)
@@ -11,9 +13,13 @@ graph TD
     D --> E(Vulnerabilities Scan)
     E --> F(Create Image)
     F --> G(Push Image to Registry)
+```
+
 
 ### CD Flow: 
 - See this in Continuation to above flow
+
+```mermaid
 
 graph TD
       F(Start) --> G(Pull Image from Registry)
@@ -24,3 +30,4 @@ graph TD
       K --> L(Run DAST tool-Wireshark for Security Testing)
       L --> M(Run Performance Tests)
       M --> N(Deploy to Production)
+```
