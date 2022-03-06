@@ -90,6 +90,39 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+			<!--use  this to pass credentials: -Djib.to.auth.username=$docker_hub_user_name -Djib.to.auth.password=$docker_hub_password -->
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<from>
+						<image>openjdk:11</image>
+					</from>
+					<to>
+						<image>docker.io/yantraqa/spring-ref-app:latest</image>
+					</to>
+					<container>
+						<jvmFlags>
+							<jvmFlag>-Xms256m</jvmFlag>
+							<jvmFlag>-Xmx512m</jvmFlag>
+						</jvmFlags>
+						<ports>
+							<port>9096</port>
+						</ports>
+					</container>
+					<allowInsecureRegistries>true</allowInsecureRegistries>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
