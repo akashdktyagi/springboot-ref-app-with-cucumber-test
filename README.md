@@ -1,5 +1,10 @@
 # Notes
 
+---
+Other pages:
+* for CI-CD Flow: ![CI CD Flow Diagram] (CI_CD_FLOW.md)
+---
+
 Steps:
 
 * Generate API template from Spring Initilaizer. Check the POM.xml for what dependencies to be added.
