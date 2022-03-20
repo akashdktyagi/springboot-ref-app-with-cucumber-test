@@ -23,12 +23,6 @@ public class ProductRestController {
     @Autowired
     ModelMapper modelMapper;
 
-    @GetMapping("/logging")
-    @SecurityRequirement(name="bearerAuth")
-    public ResponseEntity<String> logging() {
-        return new ResponseEntity<>("logging/baeldung", HttpStatus.OK);
-    }
-
     @PostMapping("/entity")
     @SecurityRequirement(name="bearerAuth")
     public ProductDto createEntity(@RequestBody ProductDto productDto) throws Exception {
