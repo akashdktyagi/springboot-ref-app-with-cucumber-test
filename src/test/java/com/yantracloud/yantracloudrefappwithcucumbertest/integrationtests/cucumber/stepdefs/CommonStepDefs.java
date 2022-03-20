@@ -72,6 +72,7 @@ public class CommonStepDefs {
     public void with_end_point_url_as(String endPoint) {
         _url = server + endPoint;
     }
+
     @Given("with body as {string}")
     public void with_body_as(String string) {
         _body = string;
@@ -104,7 +105,7 @@ public class CommonStepDefs {
             case "post":
                 _resultActions = mockMvc.perform(post(URI.create(_url))
                         .content(_body)
-
+                        .contentType("application/json")
                         .headers(_httpHeaders));
                 break;
         }
