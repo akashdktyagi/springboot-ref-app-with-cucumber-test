@@ -108,7 +108,20 @@ public class CommonStepDefs {
                         .contentType("application/json")
                         .headers(_httpHeaders));
                 break;
+            case "put":
+                _resultActions = mockMvc.perform(put(URI.create(_url))
+                        .content(_body)
+                        .contentType("application/json")
+                        .headers(_httpHeaders));
+            case "delete":
+                _resultActions = mockMvc.perform(delete(URI.create(_url))
+                        .headers(_httpHeaders));
+                break;
+            default:
+                _scenario.log("This method is not supported." + methodName);
         }
+        _scenario.log("Status: " + String.valueOf(_resultActions.andReturn().getResponse().getStatus()));
+        _scenario.log("Error Message: " + String.valueOf(_resultActions.andReturn().getResponse().getErrorMessage()));
         _scenario.log("Response as String: " + String.valueOf(_resultActions.andReturn().getResponse().getContentAsString()));
 
     }
@@ -122,7 +135,6 @@ public class CommonStepDefs {
 
     @Then("status is {string}")
     public void status_is(String code) throws Exception {
-        _scenario.log("Status: " + String.valueOf(_resultActions.andReturn().getResponse().getStatus()));
         _resultActions.andExpect(status().is(Integer.parseInt(code)));
     }
     @Then("response contains string as {string}")
