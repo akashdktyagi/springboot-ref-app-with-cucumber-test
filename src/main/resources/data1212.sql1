@@ -1,1 +1,1 @@
-INSERT INTO product (id, name, description, company) VALUES (1, 'laptop','a good laptop','HP');
+INSERT INTO product (id, name, description, company) VALUES (1, 'laptop','a good laptop','HP') ;
