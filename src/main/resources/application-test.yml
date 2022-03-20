@@ -1,6 +1,6 @@
 server:
   port: '9096'
-
+  host: 'http://localhost:9096'
 spring:
   h2:
     console.enabled: true
@@ -29,3 +29,15 @@ springdoc:
   swagger-ui:
     path: swagger-ui.html
 
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+cucumbertest:
+  auth:
+    client-id: L8XRJjXgjJqsrUCcELtVb5m46KqWgLlf
+    client-secret: 5PglHF_jc5v-81fzlJcOTM2YZ2iABNYAuekfO_WR3W4IHKN0-7yxPqcbdHO0LI65
+    token-url: https://dev-j8ajv706.us.auth0.com/oauth/token
+    audience: http://localhost:9096/api
