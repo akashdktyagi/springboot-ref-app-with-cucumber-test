@@ -1,21 +1,27 @@
 package com.yantracloud.yantracloudrefappwithcucumbertest.integrationtests.cucumber.stepdefs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yantracloud.yantracloudrefappwithcucumbertest.dto.ProductDto;
-import com.yantracloud.yantracloudrefappwithcucumbertest.repository.ProductRepository;
+import com.yantracloud.yantracloudrefappwithcucumbertest.integrationtests.other.TestContext;
+import com.yantracloud.yantracloudrefappwithcucumbertest.integrationtests.other.Utils;
+import com.yantracloud.yantracloudrefappwithcucumbertest.pojo.Auth0ClientCredentialFlowRequest;
+import com.yantracloud.yantracloudrefappwithcucumbertest.pojo.Auth0ClientCredentialFlowResponse;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.assertj.core.api.Assertions;
+import org.assertj.core.util.Preconditions;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.web.client.RestTemplate;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,19 +43,25 @@ public class CommonStepDefs {
     @Value("${server.host}")
     private String server;
 
+    @Value("${cucumbertest.auth.client-id}")
+    private String clientID;
+    @Value("${cucumbertest.auth.client-secret}")
+    private String clientSecret;
+    @Value("${cucumbertest.auth.audience}")
+    private String audience;
+    @Value("${cucumbertest.auth.token-url}")
+    private String tokenUrl;
+
     ResultActions _resultActions;
     String _body;
     String _url;
+    String _access_token;
     HttpHeaders _httpHeaders = new HttpHeaders();
+
+    @Autowired
+    TestContext testContext;
+
     private Scenario _scenario;
-
-
-//    MockHttpServletRequestBuilder mockHttpServletRequestBuilder =
-//            post(URI.create(server + endPoint))
-//                    .content(body)
-//                    .contentType("application/json");
-//
-//    resultActions = mockMvc.perform(mockHttpServletRequestBuilder);
 
     @Before
     public void setUp(Scenario scenario){
@@ -64,31 +76,49 @@ public class CommonStepDefs {
     public void with_body_as(String string) {
         _body = string;
     }
+
+    @Given("with body json as")
+    public void with_body_as_doc_string(String doc_string) {
+        _body = doc_string;
+    }
+
     @Given("with headers as in below table")
     public void with_headers_in_json_format_as(Map<String,String> headers) {
         headers.forEach(_httpHeaders::add);
     }
+
     @Given("with mock as {string}")
     public void with_mock_as_(String string) {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
     }
+
     @When("with method as {string}")
     public void with_method_as(String methodName) throws Exception {
         switch (methodName){
             case "get":
                 _resultActions = mockMvc.perform(get(URI.create(_url))
-                        .headers(_httpHeaders));
+                        .headers(_httpHeaders))
+                ;
                 break;
             case "post":
                 _resultActions = mockMvc.perform(post(URI.create(_url))
                         .content(_body)
+
                         .headers(_httpHeaders));
                 break;
         }
         _scenario.log("Response as String: " + String.valueOf(_resultActions.andReturn().getResponse().getContentAsString()));
 
     }
+
+    @Given("with acquired token and with authorization flow as {string}")
+    public void with_acquired_token_and_with_auth_flow_as(String authType) throws Exception {
+        _access_token = Utils.getToken(tokenUrl,clientID,clientSecret,audience);
+        _httpHeaders.add("Authorization","Bearer " + _access_token);
+        _scenario.log("Access token received: " + _access_token);
+    }
+
     @Then("status is {string}")
     public void status_is(String code) throws Exception {
         _scenario.log("Status: " + String.valueOf(_resultActions.andReturn().getResponse().getStatus()));

@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
                 "html:target/cucumber-reports.html",
                 "json:target/json_result.json"
         },
-        tags = "not @manual",
+        tags = "not @manual and @t",
         dryRun = false
 )
 @RunWith(Cucumber.class)
