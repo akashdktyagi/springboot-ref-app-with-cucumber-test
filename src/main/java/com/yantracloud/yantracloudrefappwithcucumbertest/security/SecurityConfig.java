@@ -4,14 +4,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.jwt.*;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Value("${spring.websecurity.debug:false}")
+    boolean webSecurityDebug;
 
     @Value("${auth0.audience}")
     private String audience;
@@ -20,15 +25,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String issuer;
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.debug(webSecurityDebug);
+    }
+    @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .mvcMatchers(HttpMethod.POST,"/api/entity").authenticated()
-                .mvcMatchers(HttpMethod.GET,"/api/entity").authenticated()
+
+
+        http
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().csrf().disable()
+                .authorizeRequests()
+                .mvcMatchers(HttpMethod.POST,"/entity").authenticated()
+                .mvcMatchers(HttpMethod.GET,"/entity").authenticated()
+//                .mvcMatchers(HttpMethod.GET,"/entity").hasAuthority("get:entity1")
+//                .mvcMatchers(HttpMethod.POST,"/entity").hasAuthority("create:entity")
+                .and()
+                .oauth2ResourceServer().jwt();
+
 //                .mvcMatchers("/product/*").authenticated()
 //                .mvcMatchers("/api/private").permitAll()
 //                .mvcMatchers("/api/private-scoped").hasAuthority("SCOPE_read:messages")
-                .and().cors()
-                .and().oauth2ResourceServer().jwt();
+//                .and().cors().and().csrf().disable()
+
     }
 
     @Bean

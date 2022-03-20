@@ -19,11 +19,21 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: https://dev-j8ajv706.us.auth0.com/
+  websecurity:
+    debug: true
+
 auth0:
   audience: http://localhost:9096/api
 
 springdoc:
   swagger-ui:
     path: swagger-ui.html
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
 
 
