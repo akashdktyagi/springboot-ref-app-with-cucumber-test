@@ -1,5 +1,6 @@
 package com.yantracloud.yantracloudrefappwithcucumbertest.integrationtests.other;
 
+import io.cucumber.spring.ScenarioScope;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.test.web.servlet.ResultActions;
 @AllArgsConstructor
 @NoArgsConstructor
 @Component
+@ScenarioScope
 public class TestContext {
     ResultActions resultActions;
     String body;
