@@ -113,6 +113,7 @@ public class CommonStepDefs {
                         .content(_body)
                         .contentType("application/json")
                         .headers(_httpHeaders));
+                break;
             case "delete":
                 _resultActions = mockMvc.perform(delete(URI.create(_url))
                         .headers(_httpHeaders));
@@ -140,8 +141,6 @@ public class CommonStepDefs {
     @Then("response contains string as {string}")
     public void response_contains_string_as(String expected) throws Exception {
         _resultActions.andExpect(content().string(containsString(expected)));
-
-//        _resultActions.andExpect(jsonPath("$.yourKeyValue", is("WhatYouExpect")))
     }
     @Then("response json path as {string} has value which contains {string}")
     public void response_json_path_as_has_value_which_contains(String string, String string2) {

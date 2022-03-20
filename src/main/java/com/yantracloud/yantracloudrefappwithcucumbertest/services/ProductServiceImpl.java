@@ -18,20 +18,21 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public Product createEntity(Product product) throws Exception {
-        log.debug("Entity Object Received: " + product);
-        //Find if there is a Product with this name
-
         Optional<Product> productIfPresent = Optional.ofNullable(productRepository.findByName(product.getName()));
         if (productIfPresent.isPresent()){
-            throw new Exception("Entity Already present with this name. No Insert made.");
+            throw new Exception("Entity Already present with this name: " + product.getName() + " No Insert made.");
         }
-
         return productRepository.save(product);
     }
 
     @Override
-    public void editEntity() {
-
+    public Product editEntity(Product product) throws Exception {
+        Optional<Product> productIfPresent = Optional.ofNullable(productRepository.findByName(product.getName()));
+        if (productIfPresent.isPresent()){
+            return productRepository.save(product);
+        }else{
+            throw new Exception("Entity not present with this name: " + product.getName() + "  can not Update.");
+        }
     }
 
     @Override
