@@ -40,6 +40,14 @@ public class ProductRestController {
                 .map(product -> modelMapper.map(product,ProductDto.class))
                 .collect(Collectors.toList());
     }
+
+    @PutMapping("/entity")
+    @SecurityRequirement(name="bearerAuth")
+    public ProductDto updateEntity(@RequestBody ProductDto productDto) throws Exception {
+        Product product = modelMapper.map(productDto, Product.class);
+        Product productReturned = entityService.editEntity(product);
+        return modelMapper.map(productReturned, ProductDto.class);
+    }
 }
 // curl --data "name=a&description=b&company=c" --request POST 'http://localhost:9096/entity'
 

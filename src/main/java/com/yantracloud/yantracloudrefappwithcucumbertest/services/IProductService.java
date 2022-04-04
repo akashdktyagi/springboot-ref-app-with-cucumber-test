@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IProductService {
     Product createEntity(Product product) throws Exception;
-    void editEntity();
+    Product editEntity(Product product) throws Exception;
     void getSingleEntity();
     List<Product> getAllEntities();
     void deleteEntity();
